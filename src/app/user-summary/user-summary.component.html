@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-1">  	  	
+  </div>
+  <div class="col-sm-5">
+    <div class="card">
+      <div class="card-block">
+      	<app-spinner *ngIf="loadingUserData"></app-spinner>
+	    <div *ngIf="!loadingUserData">
+	      	<div class="row">
+	        	<div class="col-8">
+	        		<h3 class="card-title">{{ username }}</h3>	
+	        	</div>
+	        	<div class="col-4">
+	        		<img src="{{ user.avatar_url }}" class="rounded float-right" alt="{{ name }}" style="width:70px; height: 70px">
+	        	</div>
+	        </div>
+	        <div class="row" style="padding-top: 1rem">
+	        	<div class="col-4">
+	        		<label>Name:</label>
+	        	</div>
+	        	<div class="col-6">
+	        		<label>{{ user.name }}</label>
+	        	</div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-4">
+	        		<label>Location:</label>
+	        	</div>
+	        	<div class="col-6">
+	        		<label>{{ user.location }}</label>
+	        	</div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-4">
+	        		<label>URL:</label>
+	        	</div>
+	        	<div class="col-6">
+	        		<label>{{ user.html_url }}</label>
+	        	</div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-4">
+	        		<label>Blog:</label>
+	        	</div>
+	        	<div class="col-6">
+	        		<label>{{ user.blog }}</label>
+	        	</div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-4">
+	        		<label>Repositories:</label>
+	        	</div>
+	        	<div class="col-6">
+	        		<label>{{ user.public_repos }}</label>
+	        	</div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-4">
+	        		<label>Followers:</label>
+	        	</div>
+	        	<div class="col-6">
+	        		<label>{{ user.followers }}</label>
+	        	</div>
+	        </div>
+	    </div>	        
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-5">
+    <div class="card">
+      <div class="card-block">
+      	 <app-repository-list></app-repository-list>        
+      </div>
+    </div>
+  </div>
+  <div class="col-1">  	
+  </div>
+</div>
