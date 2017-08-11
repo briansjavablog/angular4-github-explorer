@@ -18,7 +18,7 @@ export class UserService {
       .map(
         (response: Response) => {
           const user: User = response.json();
-          this.user  = response.json();          
+          this.user  = response.json();                    
         }
       )
   }
@@ -29,5 +29,9 @@ export class UserService {
 
   public getUsername(){
     return this.username;
+  }
+
+  public getTotalItems(){
+    return this.user.public_repos;
   }
 }

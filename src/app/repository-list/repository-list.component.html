@@ -1,4 +1,4 @@
-  <app-spinner *ngIf="loadingRepoData"></app-spinner>
+<app-spinner *ngIf="loadingRepoData"></app-spinner>
 	    
 <div *ngIf="!loadingRepoData">
   	
@@ -8,8 +8,10 @@
     	</div>	    
 		<div class="list-group" 
 		      style="padding-left: 20px; padding-right: 20px; width: 100%">
-		  <a 
-		  	 class="list-group-item list-group-item-action flex-column align-items-start"					  	 
+		  <a class="list-group-item 
+                list-group-item-action flex-column 
+                align-items-start"
+          (click)="openRepo(repo.html_url)"      					  	 
 		  	 *ngFor="let repo of pagedRepositories; let i=index"
 		  	 [ngClass]="activeClass" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)">
 		    <!-- <div class="d-flex w-100 justify-content-between"> -->
@@ -25,37 +27,31 @@
     	<nav aria-label="Page navigation example"
 			  style="padding-top: 20px">
 		  	
-		  <!-- pager -->
             <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
                 <li class="page-item"
                 	[ngClass]="{disabled:pager.currentPage === 1}">
                     <a class="page-link"
-                       (click)="setPage(1)">First</a>
+                       (click)="first()">First</a>
                 </li>
                 <li class="page-item"
                 	[ngClass]="{disabled:pager.currentPage === 1}">
                     <a class="page-link"
-                       (click)="setPage(pager.currentPage - 1)">Previous</a>
+                       (click)="previous(pager.currentPage - 1)">Previous</a>
                 </li>
                 <li class="page-item"
                 	*ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
                     <a class="page-link"
-                       (click)="setPage(page)">{{page}}</a>
+                       (click)="specificPage(page)">{{page}}</a>
                 </li>
                 <li class="page-item"
-                	[ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                  <!--   <a class="page-link"
-                       (click)="setPage(pager.currentPage + 1)">Next</a> -->
-                       currentPage: {{ pager.currentPage }} 
-                       totalPages: {{ pager.totalPages }}
-
+                	[ngClass]="{disabled:pager.currentPage === pager.totalPages}">                                        
                          <a class="page-link"
                        (click)="next(pager.currentPage + 1)">Next</a>
                 </li>
                 <li class="page-item"
                 	[ngClass]="{disabled:pager.currentPage === pager.totalPages}">
                     <a class="page-link"
-                       (click)="setPage(pager.totalPages)">Last</a>
+                       (click)="last()">Last</a>
                 </li>
             </ul>
 		</nav>

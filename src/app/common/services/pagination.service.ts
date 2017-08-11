@@ -34,8 +34,10 @@ export class PaginationService {
         };
     }*/
 
-    getPager(totalItems: number, currentPage: number = 1, 
-             pageSize: number = 4, totalPages: number) {
+    getPager(/*totalItems: number, */currentPage: number = 1, 
+             totalPages: number) {
+        
+        let pageSize = 4
         // calculate total pages
         //let totalPages = Math.ceil(totalItems / pageSize);
  
@@ -46,23 +48,23 @@ export class PaginationService {
         if(currentPage === 1){
             endPage = currentPage + 2;
         }
-        else if(currentPage < totalItems) {
+        else if(currentPage < totalPages) {
             endPage = currentPage + 1;
         }
         else{
-            endPage = totalItems;
+            endPage = totalPages;
         }
 
         // calculate start and end item indexes
         let startIndex = (currentPage - 1) * pageSize;
-        let endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
+        let endIndex = Math.min(startIndex + pageSize - 1, totalPages - 1);
  
         // create an array of pages to ng-repeat in the pager control
         let pages = _.range(startPage, endPage + 1);
  
         // return object with all pager properties required by the view
         return {
-            totalItems: totalItems,
+            /*totalItems: totalItems,*/
             currentPage: currentPage,
             pageSize: pageSize,
             totalPages: totalPages,
@@ -131,10 +133,26 @@ export class PaginationService {
         } /*else {
             next = response.getHeader(HEADER_NEXT);
             last = response.getHeader(HEADER_LAST);
-        }*/
-        let totalPages = last.substring(last.lastIndexOf("=")+1, last.length);
+        }*/        
+        //let totalPages = last.substring(last.lastIndexOf("=")+1, last.length);
+        let totalPages;
+        let linkTemplate;
+        /* if we have a last link use it */
+        if(last){
+            totalPages = last.substring(last.lastIndexOf("=")+1, last.length);
+            linkTemplate = last.substring(0, last.lastIndexOf("=") + 1);
+        }
+        /* if we dont we're on the last page - we need to take the page 
+           number of the previous link and add 1 */
+        else {
+            totalPages = parseInt(prev.substring(
+                                   prev.lastIndexOf("=")+1, prev.length)) + 1;
+            // returning string!!! - cobnvert to number before adding 1
+            linkTemplate = prev.substring(0, prev.lastIndexOf("=") +1 );
+        }
 
         return {
+            linkTemplate: linkTemplate,
             first: first,
             last: last,
             next: next,
